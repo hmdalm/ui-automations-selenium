@@ -24,13 +24,14 @@ public class ChromeDriverTest {
 	private static WebDriver driver;
 
 	// @Before if want to run before every test method call, but method should be
-	// non static then
+	// non static then 
 	@BeforeClass
 	public static void prepare() {
-		System.setProperty("webdriver.chrome.driver", "/Users/moshadab/Documents/softwares/selenium/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "E:\\Selenium webdrivers\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.navigate().to(AppConstants.BASE_URL_SWAG_LAB);
 		driver.manage().window().maximize();
+		System.out.println("");
 	}
 
 	@Test
@@ -56,7 +57,7 @@ public class ChromeDriverTest {
 
 	@Test
 	public void test3_testProductSorting() throws Exception {
-
+		
 		String firstItemAmountString = driver.findElement(By.xpath("//*[@id=\"inventory_container\"]/div/div[1]/div[2]/div[2]/div"))
 				.getText();
 		Float firstItemAmount= Float.valueOf(firstItemAmountString.substring(1));
@@ -73,19 +74,67 @@ public class ChromeDriverTest {
 		 * selectObject.selectByValue("value1");
 		 * 
 		 * // Select an <option> based upon its text
-		 * selectObject.selectByVisibleText("Bread");
+		 * selectObject.selectByVisibleText("Bread");//*//*//*
 		 */
 		String firstItemAmountStringAfterSecond = driver.findElement(By.xpath("//*[@id=\"inventory_container\"]/div/div[1]/div[2]/div[2]/div"))
 				.getText();
 		Float firstItemAmountAfterSorting = Float.valueOf(firstItemAmountStringAfterSecond.substring(1));
 
 		 assertTrue("Items not sorted", firstItemAmount>=firstItemAmountAfterSorting);
+		 SeleniumUtility.hold(10000);
+	}
+	
+	@Test
+	public void test4_testItemAddinCart() throws Exception {
+		SeleniumUtility.hold(10000);
+        driver.findElement(By.xpath("//*[@id=\"add-to-cart-sauce-labs-backpack\"]")).click();
+        SeleniumUtility.hold(10000);
+        driver.findElement(By.xpath("//*//*[@id=\"add-to-cart-sauce-labs-fleece-jacket\"]")).click();
+        SeleniumUtility.hold(10000);
+        driver.findElement(By.xpath("//*//*[@id=\"add-to-cart-test.allthethings()-t-shirt-(red)\"]")).click();
+        driver.findElement(By.xpath("//*[@id=\"shopping_cart_container\"]/a")).click(); 
+
+		SeleniumUtility.takeScreenShot(driver, AppConstants.OUTPUT_SWAG_LAB_PATH + "ItemAddingInCart.png");
+		
+		
+
+	}
+	@Test
+	public void test5_CheckoutItem() throws Exception {
+		driver.findElement(By.xpath("//*[@id=\"checkout\"]")).click();
+		SeleniumUtility.hold(5000);
+		driver.findElement(By.id("first-name")).sendKeys(AppConstants.FIRST_NAME_SWAG_LAB);
+		SeleniumUtility.hold(5000);
+		driver.findElement(By.id("last-name")).sendKeys(AppConstants.LAST_NAME_SWAG_LAB);
+		SeleniumUtility.hold(5000);
+		driver.findElement(By.id("postal-code")).sendKeys(AppConstants.ZIP_CODE_SWAG_LAB);
+		SeleniumUtility.hold(5000);
+		driver.findElement(By.xpath("//*[@id=\"continue\"]")).click(); 
+		driver.findElement(By.xpath("//*[@id=\"finish\"]")).click();
+		SeleniumUtility.hold(10000);
+		driver.findElement(By.xpath("//*[@id=\"back-to-products\"]")).click();
+		SeleniumUtility.hold(5000);
+		SeleniumUtility.takeScreenShot(driver, AppConstants.OUTPUT_SWAG_LAB_PATH + "ItemAddingInCart.png");
+		
+		
+		
+	}
+	@Test
+	public void test6_testLogOutUserSuccess() throws Exception {
+		SeleniumUtility.hold(10000);
+        driver.findElement(By.xpath("//*[@id=\"react-burger-menu-btn\"]")).click();
+        SeleniumUtility.hold(10000);
+        driver.findElement(By.xpath("//*[@id=\"logout_sidebar_link\"]")).click();
+        SeleniumUtility.hold(10000);
+		SeleniumUtility.takeScreenShot(driver, AppConstants.OUTPUT_SWAG_LAB_PATH + "LogOutSuccess.png");
+		
+		
 
 	}
 	
 	// @After can be used if we want to invoke it after every test method call - but
 	// method should be non static then
-	@AfterClass
+	//@AfterClass
 	public static void teardown() throws IOException {
 		SeleniumUtility.hold(10000);
 		driver.quit();

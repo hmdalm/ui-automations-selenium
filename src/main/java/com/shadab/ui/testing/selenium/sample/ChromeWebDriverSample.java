@@ -4,13 +4,17 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+
 
 public class ChromeWebDriverSample {
 	
 
 	   public static void main(String[] args) {
-		   System.setProperty("webdriver.chrome.driver", "/Users/moshadab/Documents/softwares/selenium/chromedriver");
+		   System.setProperty("webdriver.chrome.driver", "E:\\Selenium webdrivers\\chromedriver.exe");
 		   WebDriver driver = new ChromeDriver();
 	      //Puts an Implicit wait, Will wait for 10 seconds before throwing exception
 	      driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -44,10 +48,14 @@ public class ChromeWebDriverSample {
 	      
 	      // Print a Log In message to the screen
 	      System.out.println(" The Result is " + result);
+	      // Click on home 
+	     
 	      
+	  
+	      	      
 	      //Close the Browser.
-	      driver.close();
-	   }
+	      driver.close();}
+	   
 
 
 }
